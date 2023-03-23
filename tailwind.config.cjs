@@ -30,10 +30,10 @@ module.exports = {
         'very-dark-grayish-blue': 'hsl(237, 14%, 26%)',
       },
       backgroundImage: {
-        'mobile-light-mode': "url('./images/bg-mobile-light.jpg')",
-        'mobile-dark-mode': "url('./images/bg-mobile-dark.jpg')",
-        'desktop-light-mode': "url('./images/bg-desktop-light.jpg')",
-        'desktop-dark-mode': "url('./images/bg-desktop-dark.jpg')",
+        'mobile-light-mode': "url('/images/bg-mobile-light.jpg')",
+        'mobile-dark-mode': "url('/images/bg-mobile-dark.jpg')",
+        'desktop-light-mode': "url('/images/bg-desktop-light.jpg')",
+        'desktop-dark-mode': "url('/images/bg-desktop-dark.jpg')",
       },
       fontFamily: {
         josefinSans: ['"Josefin Sans"', ...defaultTheme.fontFamily.sans]
