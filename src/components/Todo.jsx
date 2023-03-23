@@ -1,8 +1,8 @@
 import { useState,useEffect } from 'react';
-import moon from '../assets/images/icon-moon.svg';
-import sun from '../assets/images/icon-sun.svg';
-import check from '../assets/images/icon-check.svg';
-import cross from '../assets/images/icon-cross.svg';
+import moon from '../../images/icon-moon.svg';
+import sun from '../../images/icon-sun.svg';
+import check from '../../images/icon-check.svg';
+import cross from '../../images/icon-cross.svg';
 
 const Todo = (props) => {
   const [taskText,setTaskText] = useState('');
