@@ -1,5 +1,4 @@
 import { useState,useEffect } from 'react';
-import addNotification from 'react-push-notification';
 import moon from '../assets/images/icon-moon.svg';
 import sun from '../assets/images/icon-sun.svg';
 import check from '../assets/images/icon-check.svg';
@@ -98,19 +97,9 @@ const Todo = (props) => {
     localStorage.setItem('tasks', JSON.stringify(rearrangedTasks));
   }
 
-  const buttonClick = () => {
-    addNotification({
-        title: 'Pending Todo',
-        subtitle: 'There are tasks to be done',
-        message: `${JSON.stringify(activeTasks[0].text)} task is active!`,
-        native: true,
-    });
-};
-
   return (
     <div className=''>
         <div className="bg-mobile-light-mode bg-cover bg-center bg-no-repeat w-screen h-44 flex flex-col gap-3 pt-8 px-8 dark:bg-mobile-dark-mode">
-        <button onClick={buttonClick}>Notify</button>
           <div className='flex justify-between'>
               <h3 className="text-very-light-gray text-3xl tracking-[.5rem] font-bold">TODO</h3>
               <img className='w-6 h-6 cursor-pointer' src={props.darkMode ? sun : moon} alt="light-dark-mode" onClick={() => props.handleTheme(!props.darkMode)} />
