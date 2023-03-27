@@ -113,11 +113,13 @@ const Todo = (props) => {
   const handleNotifications = () => {
     if(Notification.permission === 'granted') {
       if (document.hidden) {
-        removeNotification({
+        setTimeout(() => {
+          addNotification({
             title: 'Pending Tasks',
             message: `You have pending tasks!`,
             native: true,        
           });
+        },3000);
         }
     }
   }
