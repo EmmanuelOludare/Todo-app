@@ -119,7 +119,7 @@ const Todo = (props) => {
             message: `You have pending tasks!`,
             native: true,        
           });
-        },3000);
+        },216000000);
         }
     }
   }
