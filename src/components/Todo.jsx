@@ -114,7 +114,7 @@ const Todo = (props) => {
           </div>
         </div>
           <div className="max-w-[600px] flex flex-col bg-white shadow-md rounded-lg mx-8 mt-[-30px] dark:bg-very-dark-desaturated-blue md:mx-[16vw] lg:mx-[25vw] xl:mx-[30vw] md:mt-[-45px] ">
-            {tasksCategory[taskIndex] === 0 ? <p className='text-center text-xl'>{tasksCategoryText[taskIndex]}</p> : tasksCategory[taskIndex].map((task, index) => (
+            {tasksCategory[taskIndex].length === 0 ? <p className='text-dark-grayish-blue text-center text-xl mt-2'>{tasksCategoryText[taskIndex]}</p> : tasksCategory[taskIndex].map((task, index) => (
                 <div 
                   className="group flex justify-between items-center border-b-[.5px] border-dark-grayish-blue p-3 md:px-6 cursor-pointer" 
                   key={index}
