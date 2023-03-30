@@ -1,6 +1,4 @@
 import { useState,useEffect } from 'react';
-import addNotification from 'react-push-notification';
-import removeNotification from 'react-push-notification';
 import moon from '../assets/images/icon-moon.svg';
 import sun from '../assets/images/icon-sun.svg';
 import check from '../assets/images/icon-check.svg';
@@ -30,15 +28,6 @@ const Todo = (props) => {
         setTasks(reversedArray);
         localStorage.setItem('tasks', JSON.stringify(reversedArray));
         setTaskText('');
-        Notification.requestPermission(function() {
-          if (Notification.permission === 'granted') {
-             setNotificationStatus('Permission granted');
-          } else if (Notification.permission === 'denied') {
-            setNotificationStatus('Permission denied');
-          } else {
-            setNotificationStatus('Permission default');
-          }
-      });
     }
   };
 
@@ -108,26 +97,7 @@ const Todo = (props) => {
     rearrangedTasks.splice(targetIndex, 0, removedItem);
     setTasks(rearrangedTasks);
     localStorage.setItem('tasks', JSON.stringify(rearrangedTasks));
-  }
-
-  const handleNotifications = () => {
-    if(Notification.permission === 'granted') {
-      if (document.hidden) {
-        setTimeout(() => {
-          addNotification({
-            title: 'Pending Tasks',
-            message: `You have pending tasks!`,
-            native: true,        
-          });
-        },216000000);
-        }
-    }
-  }
-
-  useEffect(() => {
-      document.addEventListener('visibilitychange',handleNotifications);
-      return () => document.removeEventListener('visibilitychange',handleNotifications);
-  },[]);
+  };
 
   return (
     <div className=''>
@@ -139,14 +109,14 @@ const Todo = (props) => {
             </div>
             <div className="flex flex-col w-full">
               <div className='border-dark-grayish-blue border-2 rounded-full w-6 h-6 p-2 absolute mt-3 ml-3.5 opacity-40'></div>
-              <input type="text" aria-label='Create a new todo...' placeholder='Create a new todo...' className='indent-12 rounded-lg py-3.5 dark:bg-very-dark-desaturated-blue dark:text-light-grayish-blue(hover)' value={taskText} onChange={handleTaskText} onKeyUp={addTask}/>
+              <input type="text" aria-label='Create a new todo...' placeholder='Create a new todo...' className='outline-none caret-bright-blue indent-12 rounded-lg py-3.5 dark:bg-very-dark-desaturated-blue dark:text-light-grayish-blue(hover)' value={taskText} onChange={handleTaskText} onKeyUp={addTask}/>
             </div> 
           </div>
         </div>
           <div className="max-w-[600px] flex flex-col bg-white shadow-md rounded-lg mx-8 mt-[-30px] dark:bg-very-dark-desaturated-blue md:mx-[16vw] lg:mx-[25vw] xl:mx-[30vw] md:mt-[-45px] ">
             {tasksCategory[taskIndex] === 0 ? <p className='text-center text-xl'>{tasksCategoryText[taskIndex]}</p> : tasksCategory[taskIndex].map((task, index) => (
                 <div 
-                  className="flex justify-between items-center border-b-[.5px] border-dark-grayish-blue p-3 cursor-pointer" 
+                  className="group flex justify-between items-center border-b-[.5px] border-dark-grayish-blue p-3 md:px-6 cursor-pointer" 
                   key={index}
                   draggable={true}
                   onDragStart={(event) => handleDragStart(event, index)}
@@ -154,20 +124,20 @@ const Todo = (props) => {
                   onDrop={(event) => handleDrop(event, index)}>
                   <div onClick={() => completeTask(index)} className={`border-dark-grayish-blue border-2 rounded-full w-8 h-8 p-2 ${task.completed ? "bg-gradient-to-r from-from to-to" : "bg-none"}`}><img className={`w-4 h-3 m-auto ${task.completed ? "flex" : "hidden"}`} src={check} alt="Completed"/></div>
                   <p className={`text-md mr-auto ml-3 ${task.completed ? "line-through text-dark-grayish-blue dark:text-dark-grayish-blue" : "no-underline text-black dark:text-light-grayish-blue(hover)"}`}>{task.text}</p>
-                  <img className='w-4 h-4 cursor-pointer' src={cross} alt="cancel" onClick={() => deleteTask(index)}/>
+                  <img className='w-4 h-4 cursor-pointer lg:hidden lg:group-hover:block' src={cross} alt="cancel" onClick={() => deleteTask(index)}/>
                 </div>
               ))}
               <div className="flex justify-between py-5 px-3">
                 <p className="text-sm text-dark-grayish-blue">{tasksCategory[taskIndex].length} items left</p>
                 <div className="max-w-[600px] flex justify-center gap-6 mt-[55px] absolute left-0 right-0 bg-white shadow-md rounded-lg mx-8 py-2 dark:bg-very-dark-desaturated-blue md:mt-0 md:relative md:shadow-none md:rounded-none md:mx-0 md:py-0">
-                  <p onClick={displayAllTasks} className={`text-lg font-semibold cursor-pointer ${taskIndex === 0 ? 'text-bright-blue' : 'text-dark-grayish-blue'}`}>All</p>
-                  <p onClick={displayActiveTasks} className={`text-lg font-semibold cursor-pointer ${taskIndex === 1 ? 'text-bright-blue' : 'text-dark-grayish-blue'}`}>Active</p>
-                  <p onClick={displayCompletedTasks} className={`text-lg font-semibold cursor-pointer ${taskIndex === 2 ? 'text-bright-blue' : 'text-dark-grayish-blue'}`}>Completed</p>
+                  <p onClick={displayAllTasks} className={`text-lg font-semibold cursor-pointer hover:text-very-dark-grayish-blue hover:dark:text-light-grayish-blue(hover) ${taskIndex === 0 ? 'text-bright-blue' : 'text-dark-grayish-blue'}`}>All</p>
+                  <p onClick={displayActiveTasks} className={`text-lg font-semibold cursor-pointer hover:text-very-dark-grayish-blue hover:dark:text-light-grayish-blue(hover) ${taskIndex === 1 ? 'text-bright-blue' : 'text-dark-grayish-blue'}`}>Active</p>
+                  <p onClick={displayCompletedTasks} className={`text-lg font-semibold cursor-pointer hover:text-very-dark-grayish-blue hover:dark:text-light-grayish-blue(hover) ${taskIndex === 2 ? 'text-bright-blue' : 'text-dark-grayish-blue'}`}>Completed</p>
                 </div>
-                <p onClick={clearCompletedTasks} className="text-sm text-dark-grayish-blue cursor-pointer">Clear Completed</p>
+                <p onClick={clearCompletedTasks} className="text-sm text-dark-grayish-blue cursor-pointer hover:text-very-dark-grayish-blue hover:dark:text-light-grayish-blue(hover)">Clear Completed</p>
               </div>
           </div>
-          <p className="text-dark-grayish-blue text-center mt-[75px] md:mt-[20px]">Drag and drop to reorder list</p>
+          <p className="text-dark-grayish-blue text-center mt-[75px] md:mt-[20px] ">Drag and drop to reorder list</p>
       </div>
   )
 }
